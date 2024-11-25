@@ -1,10 +1,9 @@
 # Vector.py
 # Created by Michael Marek (2015)
-# Custom two-dimentional vector class for easy creation and manipulation of vectors. Contains
+# Custom two-dimensional vector class for easy creation and manipulation of vectors. Contains
 # standard arithmetic operations between vectors and coefficients (addition, subtraction, and
 # multiplication), as well as a number of handy operations that are commonly used (dot product,
 # normalization, etc.)
-
 
 import math
 import operator
@@ -73,7 +72,7 @@ class Vector:
         return not self.__eq__(other)
 
     #
-    def __nonzero__(self):
+    def __bool__(self):
         return self.x != 0.0 or self.y != 0.0
 
     #
@@ -82,7 +81,7 @@ class Vector:
     __radd__ = __add__
 
     #
-    def __iadd_(self, other):
+    def __iadd__(self, other):
         self.x += other.x
         self.y += other.y
         return self
@@ -99,32 +98,31 @@ class Vector:
 
     #
     def __mul__(self, other):
-        assert type(other) in (int, long, float)
+        assert isinstance(other, (int, float))
         return Vector(self.x * other, self.y * other)
 
     #
     def __rmul__(self, other):
-        assert type(other) in (int, long, float)
+        assert isinstance(other, (int, float))
         return Vector(self.x * other, self.y * other)
 
     #
     def __imul__(self, other):
-        assert type(other) in (int, long, float)
+        assert isinstance(other, (int, float))
         self.x *= other
         self.y *= other
         return self
 
     #
-    def __div__(self, other):
-        assert type(other) in (int, long, float)
-        return Vector(operator.div(self.x, other),
-                      operator.div(self.y, other))
+    def __truediv__(self, other):
+        assert isinstance(other, (int, float))
+        return Vector(self.x / other, self.y / other)
 
     #
-    def __idiv__(self, other):
-        assert type(other) in (int, long, float)
-        operator.div(self.x, other)
-        operator.div(self.y, other)
+    def __itruediv__(self, other):
+        assert isinstance(other, (int, float))
+        self.x /= other
+        self.y /= other
         return self
 
     #
@@ -137,7 +135,7 @@ class Vector:
 
     #
     def __str__(self):
-        return "Vector("+str(self.x)+", "+str(self.y)+")"
+        return f"Vector({self.x}, {self.y})"
 
     #
     @staticmethod
